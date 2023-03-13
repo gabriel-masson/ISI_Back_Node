@@ -1,8 +1,16 @@
 const express = require('express');
 const mongo = require("../model/model");
 const app = express();
+const cors = require('cors')
+
+app.use(cors())
+
 
 const collection = mongo.collection;
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  next();
+});
 
 // Configuração do parser para o formato JSON
 app.use(express.json());
@@ -14,13 +22,14 @@ app.get('/api/aluno', async (req, res) => {
   const docs = await collection.find().toArray();
   //console.log(docs);
 
-  res.send(docs);
+  res.json(docs);
 });
 
 // Exemplo de rota com método POST
 app.post('/api/aluno', async (req, res) => {
   const dados = req.body;
-  //console.log(req.body); // Exibe o corpo da requisição no console
+  
+  console.log(req.body); // Exibe o corpo da requisição no console
 
   //inserção de dados
   const result = await collection.insertOne({
@@ -29,7 +38,7 @@ app.post('/api/aluno', async (req, res) => {
     titulo: dados.titulo,
     linha_de_pesquisa: dados.linha_de_pesquisa
   });
-
+console.log(result)
   res.send(result);
 });
 
