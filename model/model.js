@@ -1,4 +1,4 @@
-// senha mongoISI321
+
 const mongoose = require('mongoose');
 const MongoClient = require('mongodb').MongoClient;
 // URI de conexão fornecida pelo serviço de hospedagem online do MongoDB
